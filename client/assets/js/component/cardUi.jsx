@@ -16,19 +16,17 @@ class CardUi extends React.Component {
         }
       ]
     }
-    this.loop();
   }
   render() {
-    return (
-      <ul>
-      <li>{this.state.data[2].title}</li>
-      </ul>
-    )
-  }
-  loop() {
+    let arr = [];
     for (let i = 0; i < this.state.data.length; i++) {
-      console.log(i);
+      arr.push(<li key={i}>{this.state.data[i].title}</li>)
     }
+    console.log(arr)
+
+    return (
+      <ul>{arr}</ul>
+    )
   }
 }
 
