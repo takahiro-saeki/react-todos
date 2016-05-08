@@ -1,17 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-class Main extends React.Component {
-  render() {
-    return (
-      <section>
-      テスト
-      </section>
-    )
-  }
-}
+import Header from './component/header.jsx';
 
 ReactDOM.render(
-  <Main />,
+  <Header />,
   document.getElementById('app')
 )
