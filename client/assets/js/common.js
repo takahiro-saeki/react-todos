@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Header from './component/header.jsx';
+import Index from './component/index.jsx';
 
 ReactDOM.render(
-  <Header />,
+  <Index />,
   document.getElementById('app')
 )
