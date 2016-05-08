@@ -1,26 +1,56 @@
 import React from 'react';
-import CardUi from './cardUi.jsx';
 import request from 'superagent';
-const URL = 'reactPost';
+import CardUi from './cardUi.jsx';
+const URL = 'posts';
+
+const formStyle = {
+  form: {
+    width: '100%',
+    margin: '10px auto'
+  },
+  input: {
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    fontSize: '20px',
+    border: '1px solid #ccc'
+  },
+  submit: {
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    fontSize: '20px',
+    backgroundColor: '#fff',
+    border: '1px solid #ccc'
+  }
+}
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
   submit(e) {
     e.preventDefault();
     request
     .get(URL)
-    .end(function(err, res) {
+    .end((err, res) => {
       if (res.ok) {
-        res.body.forEach(item => console.log(item.title));
+        console.log(res.body.data)
       } else {
-        console.log('error');
+        this.setState({data: test})
+        console.log(this.state);
       }
     });
   }
   render() {
     return (
-      <form onSubmit={this.submit}>
-      <input type="text" placeholder="Your name" />
-      <input type="submit" value="送信" />
+      <form onSubmit={this.submit} style={formStyle.form}>
+      <div>
+      <input type="text" placeholder="Your name" style={formStyle.input} />
+      <input type="submit" value="送信" style={formStyle.submit} />
+      </div>
+      <CardUi data={this.state.data}/>
       </form>
     )
   }
