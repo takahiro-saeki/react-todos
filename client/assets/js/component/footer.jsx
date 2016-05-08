@@ -1,17 +1,15 @@
 import React from 'react';
-
-function date() {
-  new Date().getFullYear();
-}
+import moment from 'moment';
+import footerStyle from '../style/footer';
 
 class Footer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {year: 2016}
+    this.state = {year: moment().format('YYYY')}
   }
   render() {
     return (
-      <footer>Copyright © <time>{this.state.year}</time> hiro. All Rights Reserved.</footer>
+      <footer style={footerStyle.bg}>Copyright © <time>{this.state.year}</time> hiro. All Rights Reserved.</footer>
     )
   }
 }
