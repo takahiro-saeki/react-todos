@@ -5,7 +5,6 @@ import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
 import plumber from 'gulp-plumber';
 import notify from 'gulp-notify';
-import browserSync from 'browser-sync';
 
 gulp.task('js', () => {
   browserify({
@@ -16,6 +15,5 @@ gulp.task('js', () => {
   .on('error', err => notify().write(err))
   .pipe(source('main.js'))
   .pipe(buffer())
-  .pipe(gulp.dest('template/js'))
-  .pipe(browserSync.stream());
+  .pipe(gulp.dest('../server/public/js'))
 });
