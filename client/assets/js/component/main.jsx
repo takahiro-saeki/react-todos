@@ -1,7 +1,20 @@
 import React from 'react';
 import request from 'superagent';
-import CardUi from './cardUi.jsx';
 const URL = 'posts';
+
+const card = {
+  ui: {
+    width: '21%',
+    margin: '10px 2%',
+    listStyle: 'none',
+    display: 'inline-block'
+  },
+  wrap: {
+    margin: '0px',
+    textAlign: 'center',
+    padding: '0px'
+  }
+}
 
 const formStyle = {
   form: {
@@ -23,11 +36,39 @@ const formStyle = {
   }
 }
 
+class CardUi extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <li style={card.ui} data={this.props.data}></li>
+    )
+  }
+}
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [
+        {
+          title: "test1",
+          content: "sample1"
+        },
+        {
+          title: "test2",
+          content: "sample2"
+        },
+        {
+          title: "test3",
+          content: "sample3"
+        },
+        {
+          title: "test4",
+          content: "sample4"
+        }
+      ]
     };
     this.submit = this.submit.bind(this);
   }
@@ -45,13 +86,26 @@ class Main extends React.Component {
     });
   }
   render() {
+    var testData = this.state.data.map((comment, i) => {
+      console.log(this.state.data[i].title)
+      return(
+        <CardUi key={i} data={this.state.data[i].title}>{this.state.data[i].title}</CardUi>
+      )
+    })
+    /*
+    for (let i = 0; i < this.state.data.length; i++) {
+      return(
+        <CardUi key={i} data={this.state.data[i].title}/>
+      )
+    }
+    */
     return (
       <form onSubmit={this.submit} style={formStyle.form}>
       <div>
       <input type="text" placeholder="Your name" style={formStyle.input} />
       <input type="submit" value="送信" style={formStyle.submit} />
       </div>
-      <CardUi data={this.state.data}/>
+      <ul style={card.wrap}>{testData}</ul>
       </form>
     )
   }
