@@ -29,6 +29,7 @@ class Main extends React.Component {
     this.state = {
       data: []
     };
+    this.submit = this.submit.bind(this);
   }
   submit(e) {
     e.preventDefault();
@@ -36,9 +37,9 @@ class Main extends React.Component {
     .get(URL)
     .end((err, res) => {
       if (res.ok) {
-        console.log(res.body.data)
+        console.log(res.body)
       } else {
-        this.setState({data: test})
+        this.setState({data: res.body})
         console.log(this.state);
       }
     });

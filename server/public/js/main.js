@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById('app'));
 
 },{"./component/index.jsx":5,"react":257,"react-dom":114}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -38,6 +38,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var card = {
+  ui: {
+    width: '21%',
+    margin: '10px 2%',
+    listStyle: 'none',
+    display: 'inline-block'
+  },
+  wrap: {
+    margin: '0px',
+    textAlign: 'center',
+    padding: '0px'
+  }
+};
+
 var CardUi = function (_React$Component) {
   _inherits(CardUi, _React$Component);
 
@@ -48,32 +62,52 @@ var CardUi = function (_React$Component) {
 
     _this.state = {
       data: [{
-        title: "test1"
+        title: "test1",
+        content: "sample1",
+        id: _this.createId(8)
       }, {
-        title: "test2"
+        title: "test2",
+        content: "sample2",
+        id: _this.createId(8)
       }, {
-        title: "test3"
+        title: "test3",
+        content: "sample3",
+        id: _this.createId(8)
+      }, {
+        title: "test4",
+        content: "sample4",
+        id: _this.createId(8)
       }]
     };
+    console.log(_this.state);
     return _this;
   }
 
   _createClass(CardUi, [{
-    key: "render",
+    key: 'createId',
+    value: function createId(n) {
+      var CODE = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      var r = "";
+      for (var i = 0, k = CODE.length; i < n; i++) {
+        r += CODE.charAt(Math.floor(k * Math.random()));
+      }
+      return r;
+    }
+  }, {
+    key: 'render',
     value: function render() {
       var arr = [];
       for (var i = 0; i < this.state.data.length; i++) {
         arr.push(_react2.default.createElement(
-          "li",
-          { key: i },
+          'li',
+          { key: i, style: card.ui },
           this.state.data[i].title
         ));
       }
-      console.log(arr);
 
       return _react2.default.createElement(
-        "ul",
-        null,
+        'ul',
+        { style: card.wrap },
         arr
       );
     }
@@ -245,10 +279,6 @@ var _footer = require('./footer.jsx');
 
 var _footer2 = _interopRequireDefault(_footer);
 
-var _cardUi = require('./cardUi.jsx');
-
-var _cardUi2 = _interopRequireDefault(_cardUi);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -274,7 +304,6 @@ var Index = function (_React$Component) {
         null,
         _react2.default.createElement(_header2.default, null),
         _react2.default.createElement(_main2.default, null),
-        _react2.default.createElement(_cardUi2.default, null),
         _react2.default.createElement(_footer2.default, null)
       );
     }
@@ -285,7 +314,7 @@ var Index = function (_React$Component) {
 
 exports.default = Index;
 
-},{"./cardUi.jsx":2,"./footer.jsx":3,"./header.jsx":4,"./main.jsx":6,"react":257}],6:[function(require,module,exports){
+},{"./footer.jsx":3,"./header.jsx":4,"./main.jsx":6,"react":257}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -298,13 +327,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _cardUi = require('./cardUi.jsx');
-
-var _cardUi2 = _interopRequireDefault(_cardUi);
-
 var _superagent = require('superagent');
 
 var _superagent2 = _interopRequireDefault(_superagent);
+
+var _cardUi = require('./cardUi.jsx');
+
+var _cardUi2 = _interopRequireDefault(_cardUi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -316,24 +345,53 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var URL = 'posts';
 
+var formStyle = {
+  form: {
+    width: '100%',
+    margin: '10px auto'
+  },
+  input: {
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    fontSize: '20px',
+    border: '1px solid #ccc'
+  },
+  submit: {
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    fontSize: '20px',
+    backgroundColor: '#fff',
+    border: '1px solid #ccc'
+  }
+};
+
 var Main = function (_React$Component) {
   _inherits(Main, _React$Component);
 
-  function Main() {
+  function Main(props) {
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Main).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Main).call(this, props));
+
+    _this.state = {
+      data: []
+    };
+    _this.submit = _this.submit.bind(_this);
+    return _this;
   }
 
   _createClass(Main, [{
     key: 'submit',
     value: function submit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       _superagent2.default.get(URL).end(function (err, res) {
         if (res.ok) {
-          console.log(res.body.data);
+          console.log(res.body);
         } else {
-          console.log('error');
+          _this2.setState({ data: res.body });
+          console.log(_this2.state);
         }
       });
     }
@@ -342,9 +400,14 @@ var Main = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'form',
-        { onSubmit: this.submit },
-        _react2.default.createElement('input', { type: 'text', placeholder: 'Your name' }),
-        _react2.default.createElement('input', { type: 'submit', value: '送信' })
+        { onSubmit: this.submit, style: formStyle.form },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('input', { type: 'text', placeholder: 'Your name', style: formStyle.input }),
+          _react2.default.createElement('input', { type: 'submit', value: '送信', style: formStyle.submit })
+        ),
+        _react2.default.createElement(_cardUi2.default, { data: this.state.data })
       );
     }
   }]);
