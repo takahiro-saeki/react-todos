@@ -39,8 +39,8 @@ class Main extends React.Component {
       if (res.ok) {
         console.log(res.body)
       } else {
-        this.setState({data: res.body})
-        console.log(this.state);
+        console.log(res.body.data);
+        this.setState({data: res.body.data})
       }
     });
   }

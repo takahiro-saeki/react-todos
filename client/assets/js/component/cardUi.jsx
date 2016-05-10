@@ -41,7 +41,6 @@ class CardUi extends React.Component {
         }
       ]
     }
-    console.log(this.state)
   }
 
   createId(n) {
