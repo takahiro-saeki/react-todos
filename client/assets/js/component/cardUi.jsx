@@ -21,42 +21,28 @@ class CardUi extends React.Component {
       data: [
         {
           title: "test1",
-          content: "sample1",
-          id: this.createId(8)
+          content: "sample1"
         },
         {
           title: "test2",
-          content: "sample2",
-          id: this.createId(8)
+          content: "sample2"
         },
         {
           title: "test3",
-          content: "sample3",
-          id: this.createId(8)
+          content: "sample3"
         },
         {
           title: "test4",
-          content: "sample4",
-          id: this.createId(8)
+          content: "sample4"
         }
       ]
     }
-    console.log(this.state)
-  }
-
-  createId(n) {
-    let CODE = `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`;
-    let r = "";
-    for (let i = 0, k = CODE.length; i < n; i++) {
-        r += CODE.charAt(Math.floor(k * Math.random()));
-    }
-    return r;
   }
 
   render() {
     let arr = [];
-    for (let i = 0; i < this.state.data.length; i++) {
-      arr.push(<li key={i} style={card.ui}>{this.state.data[i].title}</li>)
+    for (let i = 0; i < this.props.data.length; i++) {
+      arr.push(<li key={i} style={card.ui}>{this.props.data[i].title}</li>)
     }
 
     return (
