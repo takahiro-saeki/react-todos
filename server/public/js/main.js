@@ -82,55 +82,30 @@ var CommentBox = function (_React$Component2) {
     value: function loadCommentsFromServer() {
       var _this3 = this;
 
-      $.ajax({
-        url: this.props.url,
-        dataType: 'json',
-        cache: false,
-        success: function success(data) {
-          return _this3.setState({ data: data });
-        },
-        error: function error(xhr, status, err) {
-          return console.error(_this3.props.url, status, err.toString());
-        }
-      });
-    }
-  }, {
-    key: 'loadCommentsFromServer',
-    value: function loadCommentsFromServer() {
-      var _this4 = this;
-
-      $.ajax({
-        url: this.props.url,
-        dataType: 'json',
-        cache: false,
-        success: function success(data) {
-          _this4.setState({ data: data });
-        },
-        error: function error(xhr, status, err) {
-          console.error(_this4.props.url, status, err.toString());
+      _superagent2.default.get(this.props.url).end(function (err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          _this3.setState({ data: data.body });
         }
       });
     }
   }, {
     key: 'handleCommentSubmit',
     value: function handleCommentSubmit(comment) {
-      var _this5 = this;
+      var _this4 = this;
 
       var comments = this.state.data;
       comment.id = Date.now();
       var newComments = comments.concat([comment]);
       this.setState({ data: newComments });
-      $.ajax({
-        url: this.props.url,
-        dataType: 'json',
-        type: 'POST',
-        data: comment,
-        success: function success(data) {
-          return _this5.setState({ data: data });
-        },
-        error: function error(xhr, status, err) {
-          _this5.setState({ data: comments });
-          console.error(_this5.props.url, status, err.toString());
+
+      _superagent2.default.post(this.props.url).send(comment).end(function (err, data) {
+        if (err) {
+          _this4.setState({ data: comments });
+          console.log('Post error');
+        } else {
+          _this4.setState({ data: data.body });
         }
       });
     }
@@ -196,16 +171,16 @@ var CommentForm = function (_React$Component4) {
   function CommentForm(props) {
     _classCallCheck(this, CommentForm);
 
-    var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this, props));
+    var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this, props));
 
-    _this7.state = {
+    _this6.state = {
       author: '',
       text: ''
     };
-    _this7.handleAuthorChange = _this7.handleAuthorChange.bind(_this7);
-    _this7.handleTextChange = _this7.handleTextChange.bind(_this7);
-    _this7.handleSubmit = _this7.handleSubmit.bind(_this7);
-    return _this7;
+    _this6.handleAuthorChange = _this6.handleAuthorChange.bind(_this6);
+    _this6.handleTextChange = _this6.handleTextChange.bind(_this6);
+    _this6.handleSubmit = _this6.handleSubmit.bind(_this6);
+    return _this6;
   }
 
   _createClass(CommentForm, [{

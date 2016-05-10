@@ -1,13 +1,27 @@
 import React from 'react';
+import CommentList from './commentForm.jsx';
+import CommentForm from './commentList.jsx';
 
 export default class CommentBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [{
+        id: '',
+        author: '',
+        text: ''
+      }]
     }
     this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+  }
+
+  static defaultProps = {
+    data: [{
+      id: '',
+      author: '',
+      text: ''
+    }]
   }
 
   loadCommentsFromServer() {

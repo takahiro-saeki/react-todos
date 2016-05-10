@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import marked from 'marked';
 import request from 'superagent';
 
+
 class Comment extends React.Component {
   rawMarkup() {
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
@@ -31,25 +32,15 @@ class CommentBox extends React.Component {
   }
 
   loadCommentsFromServer() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: data => this.setState({data: data}),
-      error: (xhr, status, err) => console.error(this.props.url, status, err.toString())
-    });
-  }
-
-  loadCommentsFromServer() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: (data) => { this.setState({data: data}); },
-      error: (xhr, status, err) => {
-        console.error(this.props.url, status, err.toString());
+    request
+    .get(this.props.url)
+    .end((err, data) => {
+      if(err) {
+        console.log(err);
+      } else {
+        this.setState({data: data.body})
       }
-    });
+    })
   }
 
   handleCommentSubmit(comment) {
@@ -57,17 +48,18 @@ class CommentBox extends React.Component {
     comment.id = Date.now();
     var newComments = comments.concat([comment]);
     this.setState({data: newComments});
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: data => this.setState({data: data}),
-      error: (xhr, status, err) => {
+
+    request
+    .post(this.props.url)
+    .send(comment)
+    .end((err, data) => {
+      if(err) {
         this.setState({data: comments});
-        console.error(this.props.url, status, err.toString());
+        console.log('Post error')
+      } else {
+        this.setState({data: data.body})
       }
-    });
+    })
   }
 
   componentDidMount() {
@@ -154,7 +146,6 @@ class CommentForm extends React.Component {
     );
   }
 }
-
 ReactDOM.render(
   <CommentBox url="/api/comments" pollInterval={2000} />,
   document.getElementById('app')
